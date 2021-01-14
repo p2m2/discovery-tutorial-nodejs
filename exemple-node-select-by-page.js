@@ -7,9 +7,13 @@ nodejs ./examples-discovery/nodejs/exemple-node.js
 
 */
 
-var SWDiscoveryConfiguration = require("../../P2M2/discovery/js/target/scala-2.13/discovery-opt.js").SWDiscoveryConfiguration ;
-var SWDiscovery = require("../../P2M2/discovery/js/target/scala-2.13/discovery-opt.js").SWDiscovery ;
-var URI = require("../../P2M2/discovery/js/target/scala-2.13/discovery-opt.js").URI ;
+var requireFromUrl = require('require-from-url/sync');
+var discovery = requireFromUrl("https://cdn.jsdelivr.net/gh/p2m2/Discovery@develop/dist/discovery-web.js")
+
+
+var SWDiscoveryConfiguration = discovery.SWDiscoveryConfiguration ;
+var SWDiscovery = discovery.SWDiscovery ;
+var URI = discovery.URI ;
 
 
 let config = new SWDiscoveryConfiguration()
