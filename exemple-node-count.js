@@ -2,23 +2,17 @@
 /**
 Simple request send to DBpedia using NodeJs/Discovery lib.
 
-npm install require-from-url
-nodejs ./examples-discovery/nodejs/exemple-node.js
+npm install @p2m2/discovery@0.2.0
 
 */
 
-var requireFromUrl = require('require-from-url/sync');
-var discovery = requireFromUrl("https://cdn.jsdelivr.net/gh/p2m2/Discovery@master/dist/discovery-web.js")
-
+var discovery = require("@p2m2/discovery") ;
 
 var SWDiscoveryConfiguration = discovery.SWDiscoveryConfiguration ;
 var SWDiscovery = discovery.SWDiscovery ;
 var URI = discovery.URI ;
 
-
-
-let config = new SWDiscoveryConfiguration()
-      .setConfigString(`
+let config = SWDiscoveryConfiguration.setConfigString(`
           {
           "sources" : [{
                     "id"  : "dbpedia",
@@ -28,10 +22,11 @@ let config = new SWDiscoveryConfiguration()
            }]}
           `)
 
-        let query = new SWDiscovery(config);
+        let query = SWDiscovery(config);
 
         let r = query.something("h1")
                      .isSubjectOf(URI("http://www.w3.org/1999/02/22-rdf-syntax-ns#type"))
+                     .finder
                      .count() ;
 
         r.then((value) => {
