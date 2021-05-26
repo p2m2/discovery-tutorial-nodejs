@@ -7,18 +7,14 @@ nodejs ./examples-discovery/nodejs/exemple-node.js
 
 */
 
-var requireFromUrl = require('require-from-url/sync');
-var discovery = requireFromUrl("https://cdn.jsdelivr.net/gh/p2m2/Discovery@master/dist/discovery-web.js")
-
+var discovery = require("@p2m2/discovery")
 
 var SWDiscoveryConfiguration = discovery.SWDiscoveryConfiguration ;
 var SWDiscovery = discovery.SWDiscovery ;
-var URI = discovery.URI ;
+var URI = discovery.URI
 
 
-
-let config = new SWDiscoveryConfiguration()
-      .setConfigString(`
+let config = discovery.SWDiscoveryConfiguration.setConfigString(`
           {
           "sources" : [{
                     "id"  : "dbpedia",
