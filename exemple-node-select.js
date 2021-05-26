@@ -2,13 +2,11 @@
 /**
 Simple request send to DBpedia using NodeJs/Discovery lib.
 
-sbt discoveryJS/fullOptJS
-nodejs ./examples-discovery/nodejs/exemple-node.js
+npm install @p2m2/discovery@0.2.0
 
 */
 
-var requireFromUrl = require('require-from-url/sync');
-var discovery = requireFromUrl("https://cdn.jsdelivr.net/gh/p2m2/Discovery@master/dist/discovery-web.js")
+var discovery = require("@p2m2/discovery") ;
 
 
 var SWDiscoveryConfiguration = discovery.SWDiscoveryConfiguration ;
@@ -16,8 +14,7 @@ var SWDiscovery = discovery.SWDiscovery ;
 var URI = discovery.URI ;
 
 
-let config = new SWDiscoveryConfiguration()
-      .setConfigString(`
+let config = SWDiscoveryConfiguration.setConfigString(`
           {
           "sources" : [{
                     "id"  : "dbpedia",
@@ -32,17 +29,15 @@ let config = new SWDiscoveryConfiguration()
            }
           `)
 
-        let query = new SWDiscovery(config);
-
-        let r = query.something("some")
-                     .set(URI("http://dbpedia.org/resource/Category:1919_in_Washington_(state)"))
+        SWDiscovery(config)
+		.something("some")
+                   .set(URI("http://dbpedia.org/resource/Category:1919_in_Washington_(state)"))
                      .isSubjectOf(URI("http://www.w3.org/1999/02/22-rdf-syntax-ns#type"),"motherClass")                     
-                     .select("motherClass") ;
-
-        r.commit().raw().then((value) => {
-          let res = value;
-          console.log(JSON.stringify(res,null,4));
-        }).catch( (error) => {
-          console.error(" -- catch exception --")
-          console.error(error)
-        } );
+                     .select("motherClass")
+			.commit().raw().then((value) => {
+			  let res = value;
+			  console.log(JSON.stringify(res,null,4));
+			}).catch( (error) => {
+			  console.error(" -- catch exception --")
+			  console.error(error)
+			} );
